@@ -4,7 +4,15 @@ import threading
 import time
 from asyncio import TimeoutError
 from pyrogram import filters
+from aiohttp import web
+from plugins import web_server
 
+PORT = "8080"
+
+app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
 LOGGER = logging.getLogger(__name__)
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
